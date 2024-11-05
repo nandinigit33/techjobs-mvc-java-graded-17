@@ -11,15 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
-import static org.launchcode.techjobsmvc.controllers.ListController.columnChoices;
-
 
 /**
  * Created by LaunchCode
  */
 @Controller
 @RequestMapping("search")
-public class SearchController {
+public class SearchController extends TechJobsController{
 
     @GetMapping(value = "")
     public String search(Model model) {
@@ -29,21 +27,20 @@ public class SearchController {
 
     // TODO #3 - Create a handler to process a search request and render the updated search view.
 @PostMapping(value = "results")
-    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
+    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam(required = false) String searchTerm){
 ArrayList<Job> jobs;
 if(searchType.equals("all") && searchTerm.isEmpty()){
     jobs= JobData.findAll();
     model.addAttribute("title", "All Jobs");
-}else if (searchTerm.isEmpty()){
-    jobs = JobData.findByColumnAndValue(searchType, "");
-    model.addAttribute("title", "Jobs with " +  " " + searchType + ":");
-    model.addAttribute("columns", ListController.columnChoices);
-}else {
+} else {
     jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-    model.addAttribute("title", "Jobs With" + " " + searchType + ":" + searchTerm);
+    model.addAttribute("title", "Jobs With" + " " + searchType + ": " + searchTerm);
+    model.addAttribute("searchTerm", searchTerm);
 }
     model.addAttribute("jobs", jobs);
-
+    model.addAttribute("columns", ListController.columnChoices);
+    model.addAttribute("searchType", searchType);
+    model.addAttribute("actions", actionChoices);
     return "search";
 }
 }

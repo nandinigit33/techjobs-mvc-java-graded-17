@@ -12,6 +12,7 @@ th {
 
 td {
     vertical-align: top;
+    font-style: italic
 }
 
 tr:nth-child(odd) {
@@ -27,6 +28,7 @@ table.job-listing {
     margin: 30px auto;
     border: 1px solid #e4e4e4;
     width: 80%;
+
 }
 
 table.job-listing td:first-child {

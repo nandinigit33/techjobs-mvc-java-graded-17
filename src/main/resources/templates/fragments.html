@@ -22,8 +22,20 @@
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/search}">Search</a></li>
                 <li><a th:href="@{/list}">List</a></li>
+
             </ul>
         </div>
+    </div>
+</div>
+
+<div th:fragment="page-links" class="container body-content">
+    <div>
+        <h2>View jobs by:</h2>
+        <ul>
+            <li th:each="action : ${actions}">
+                <a th:href="@{'/' + ${action.key}}" th:text="${action.value}"></a>
+            </li>
+        </ul>
     </div>
 </div>
 
